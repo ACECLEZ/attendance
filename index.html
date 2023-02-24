@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    /* Style for the checkboxes */
+    input[type=checkbox] {
+      margin-right: 10px;
+    }
+    
+    /* Style for the sectors */
+    .sector {
+      font-weight: bold;
+      margin-top: 20px;
+    }
+    
+    /* Style for the sector checkboxes */
+    .sector-checkbox {
+      margin-left: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="sector">
+    <input type="checkbox" id="sector-1" class="sector-checkbox">
+    <label for="sector-1">Patrol 1</label>
+    
+    <div class="category">
+      <input type="checkbox" id="sector-1-cat-1" class="category-checkbox" data-parent="sector-1">
+      <label for="sector-1-cat-1">Aiden</label>
+    </div>
+    
+    <div class="category">
+      <input type="checkbox" id="sector-1-cat-2" class="category-checkbox" data-parent="sector-1">
+      <label for="sector-1-cat-2">Tom</label>
+    </div>
+    
+    <div class="category">
+      <input type="checkbox" id="sector-1-cat-3" class="category-checkbox" data-parent="sector-1">
+      <label for="sector-1-cat-3">Jerry</label>
+    </div>
+  </div>
+  
+  <div class="sector">
+    <input type="checkbox" id="sector-2" class="sector-checkbox">
+    <label for="sector-2">Sector 2</label>
+    
+    <div class="category">
+      <input type="checkbox" id="sector-2-cat-1" class="category-checkbox" data-parent="sector-2">
+      <label for="sector-2-cat-1">Category 1</label>
+    </div>
+    
+    <div class="category">
+      <input type="checkbox" id="sector-2-cat-2" class="category-checkbox" data-parent="sector-2">
+      <label for="sector-2-cat-2">Category 2</label>
+    </div>
+    
+    <div class="category">
+      <input type="checkbox" id="sector-2-cat-3" class="category-checkbox" data-parent="sector-2">
+      <label for="sector-2-cat-3">Category 3</label>
+    </div>
+  </div>
+  <br>
+  
+  <button id="check-absent">Check Absent</button>
+  <script>/*// Get all the sector checkboxes
+const sectorCheckboxes = document.querySelectorAll('.sector-checkbox');
+
+// Add event listeners to each sector checkbox
+sectorCheckboxes.forEach((checkbox) => {
+  checkbox.addEventListener('click', (event) => {
+    // Get the parent sector
+    const sector = event.target.parentElement;
+    // Get all the category checkboxes in the parent sector
+    const categoryCheckboxes = sector.querySelectorAll('.category-checkbox');
+    // Loop through the category checkboxes and set their checked property to the same as the sector checkbox
+    categoryCheckboxes.forEach((categoryCheckbox) => {
+      categoryCheckbox.checked = event.target.checked;
+    });
+  });
+});
+
+// Get all the category checkboxes
+const categoryCheckboxes = document.querySelectorAll('.category-checkbox');
+
+// Add event listeners to each category checkbox
+categoryCheckboxes.forEach((checkbox) => {
+  checkbox.addEventListener('click', (event) => {
+    // Get the parent sector
+    const sector = event.target.dataset.parent;
+    // Get all the category checkboxes in the parent sector
+    const categoryCheckboxes = document.querySelectorAll(`#${sector} .category-checkbox`);
+    // Loop through the category checkboxes and check the sector checkbox if all category checkboxes are checked
+    let allChecked = true;
+    categoryCheckboxes.forEach((categoryCheckbox) => {
+      if (!categoryCheckbox.checked) {
+        allChecked = false;
+      }
+    });
+    const sectorCheckbox = document.querySelector(`#${sector} .sector-checkbox`);
+    sectorCheckbox.checked = allChecked;
+  });
+});*/
+
+
+// Get all the sector checkboxes
+const sectorCheckboxes = document.querySelectorAll('.sector-checkbox');
+
+// Add event listeners to each sector checkbox
+sectorCheckboxes.forEach((checkbox) => {
+  checkbox.addEventListener('click', (event) => {
+    // Get the parent sector
+    const sector = event.target.parentElement;
+    // Get all the category checkboxes in the parent sector
+    const categoryCheckboxes = sector.querySelectorAll('.category-checkbox');
+    // Loop through the category checkboxes and set their checked property to the same as the sector checkbox
+    categoryCheckboxes.forEach((categoryCheckbox) => {
+      categoryCheckbox.checked = event.target.checked;
+    });
+  });
+});
+
+// Get all the category checkboxes
+const categoryCheckboxes = document.querySelectorAll('.category-checkbox');
+
+// Add event listeners to each category checkbox
+categoryCheckboxes.forEach((checkbox) => {
+  checkbox.addEventListener('click', (event) => {
+    // Get the parent sector
+    const sector = event.target.dataset.parent;
+    // Get all the category checkboxes in the parent sector
+    const categoryCheckboxes = document.querySelectorAll(`#${sector} .category-checkbox`);
+    // Loop through the category checkboxes and check the sector checkbox if all category checkboxes are checked
+    let allChecked = true;
+    categoryCheckboxes.forEach((categoryCheckbox) => {
+      if (!categoryCheckbox.checked) {
+        allChecked = false;
+      }
+    });
+    const sectorCheckbox = document.querySelector(`#${sector} .sector-checkbox`);
+    sectorCheckbox.checked = allChecked;
+  });
+});
+
+// Get the "Check Absent" button
+const checkAbsentButton = document.getElementById('check-absent');
+
+// Add event listener to the "Check Absent" button
+checkAbsentButton.addEventListener('click', () => {
+  // Create an array to store the names of the unchecked category checkboxes
+  const uncheckedCategories = [];
+  // Loop through the category checkboxes and add the names of the unchecked ones to the array
+  categoryCheckboxes.forEach((checkbox) => {
+    if (!checkbox.checked) {
+      uncheckedCategories.push(checkbox.nextElementSibling.textContent);
+    }
+  });
+  // Join the array into a string with comma-separated values
+  const uncheckedCategoriesString = uncheckedCategories.join(', ');
+  // Copy the string to the clipboard
+  navigator.clipboard.writeText(uncheckedCategoriesString);
+  // Display a message to indicate that the names have been copied to the clipboard
+  alert(`The names of the unchecked categories have been copied to the clipboard: ${uncheckedCategoriesString}`);
+});
+
+</script>
+</body>
+</html>
